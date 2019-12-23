@@ -42,5 +42,37 @@ class EnemyRoom(MapTile):
             the_player.hp = the_player.hp - self.enemy.damage
             print("Enemy does {} damage. You have {} HP remaining.".format(self.enemy.damage, the_player.hp))
 
+class EmptyCavePath(MapTile):
+    def intro_text(self):
+        return """
+        Another unremakrable part of the cave. You must forge onwards.
+        """
 
+    def modify_player(self, player):
+        #Room has no action on player
+        pass
+
+class GiantSpiderRoom(EnemyRoom):
+    def __init__(self, x, y):
+        super().__init__(x, y, enemies.GiantSpider())
+
+    def intro_text(self):
+        if self.enemy.is_alive():
+            return """
+            A giant spider jumps down from its web in front of you!
+            """
+        else:
+            return """
+            The corpse of a dead spider rots on the ground.
+            """
+
+class FindDaggerRoom(LootRoom):
+    def __init__(self, x, y):
+        super().__init__(x, y, items.Dagger())
+
+    def intro_text(self):
+        return """
+        You notice something shiny in the corner.
+        It's a dagger! You pick it up.
+        """
 
