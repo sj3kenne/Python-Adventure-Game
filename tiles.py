@@ -43,7 +43,7 @@ class StartingRoom(MapTile):
 
 class LootRoom(MapTile):
     def __init__(self, x, y, item):
-        self.item = item.super().__init__(x, y)
+        self.item = item
         super().__init__(x, y)
 
     def add_loot(self, player):
@@ -104,13 +104,22 @@ class FindDaggerRoom(LootRoom):
 
 class Find5GoldRoom(LootRoom):
     def __init__(self, x, y):
-        super(Find5GoldRoom, self).__init__(x, y, items.Gold(5))
+        super().__init__(x, y, items.Gold(5))
 
     def intro_text(self):
         return """
         You find a few coins scattered around the room.
         """
+        
+class SnakePitRoom(MapTile):
+    def intro_text(self):
+        return """
+        You have fallen into a pit of deadly snakes!
+        You have died!
+        """
 
+    def modify_player(self, player):
+        player.hp = 0
 
 class LeaveCaveRoom(MapTile):
     def intro_text(self):
